@@ -10,7 +10,7 @@
 
 namespace os {
 
-  enum SurfaceFormat {
+  enum class SurfaceFormat {
     kRgbaSurfaceFormat,
   };
 

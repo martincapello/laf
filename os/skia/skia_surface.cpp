@@ -269,7 +269,7 @@ uint8_t* SkiaSurface::getData(int x, int y) const
 
 void SkiaSurface::getFormat(SurfaceFormatData* formatData) const
 {
-  formatData->format = kRgbaSurfaceFormat;
+  formatData->format = SurfaceFormat::kRgbaSurfaceFormat;
   formatData->bitsPerPixel = 8*m_bitmap.bytesPerPixel();
 
   switch (m_bitmap.colorType()) {
