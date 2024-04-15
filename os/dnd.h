@@ -24,7 +24,7 @@ namespace os {
 
   // Operations that can be supported by source and target windows in a drag
   // and drop operation.
-  enum DropOperation {
+  enum class DropOperation {
     None = 0,
     Copy = 1,
     Move = 2,
@@ -74,10 +74,12 @@ namespace os {
     // target window, or set to false otherwise.
     void acceptDrop(bool value) { m_acceptDrop = value; }
 
-    bool sourceSupports(DropOperation op) { return (m_supportedOperations & op) == op; }
+    bool sourceSupports(DropOperation op) {
+      return static_cast<int>(m_supportedOperations) & static_cast<int>(op);
+      }
 
   private:
-    os::Window* m_target;
+    os::Window* m_target = nullptr;
     DropOperation m_dropResult = DropOperation::Copy;
     // Bitwise OR of the operations supported by the drag and drop source.
     DropOperation m_supportedOperations;

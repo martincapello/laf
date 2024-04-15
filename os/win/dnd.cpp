@@ -16,13 +16,13 @@
 DWORD as_dropeffect(const os::DropOperation op)
 {
   DWORD effect = DROPEFFECT_NONE;
-  if (op & os::DropOperation::Copy)
+  if (static_cast<int>(op) & static_cast<int>(os::DropOperation::Copy))
     effect |= DROPEFFECT_COPY;
 
-  if (op & os::DropOperation::Move)
+  if (static_cast<int>(op) & static_cast<int>(os::DropOperation::Move))
     effect |= DROPEFFECT_MOVE;
 
-  if (op & os::DropOperation::Link)
+  if (static_cast<int>(op) & static_cast<int>(os::DropOperation::Link))
     effect |= DROPEFFECT_LINK;
 
   return effect;
@@ -32,13 +32,13 @@ os::DropOperation as_dropoperation(DWORD pdwEffect)
 {
   int op = 0;
   if (pdwEffect & DROPEFFECT_COPY)
-    op |= os::DropOperation::Copy;
+    op |= static_cast<int>(os::DropOperation::Copy);
 
   if (pdwEffect & DROPEFFECT_MOVE)
-    op |= os::DropOperation::Move;
+    op |= static_cast<int>(os::DropOperation::Move);
 
   if (pdwEffect & DROPEFFECT_LINK)
-    op |= os::DropOperation::Link;
+    op |= static_cast<int>(os::DropOperation::Link);
 
   return static_cast<os::DropOperation>(op);
 }

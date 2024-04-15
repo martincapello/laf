@@ -78,13 +78,13 @@ bool DragDataProviderOSX::contains(DragDataItemType type)
 NSDragOperation as_nsdragoperation(const os::DropOperation op)
 {
   NSDragOperation nsdop;
-  if (op & os::DropOperation::Copy)
+  if (static_cast<int>(op) & static_cast<int>(os::DropOperation::Copy))
     nsdop |= NSDragOperationCopy;
 
-  if (op & os::DropOperation::Move)
+  if (static_cast<int>(op) & static_cast<int>(os::DropOperation::Move))
     nsdop |= NSDragOperationMove;
 
-  if (op & os::DropOperation::Link)
+  if (static_cast<int>(op) & static_cast<int>(os::DropOperation::Link))
     nsdop |= NSDragOperationLink;
 
   return nsdop;
@@ -94,13 +94,13 @@ os::DropOperation as_dropoperation(const NSDragOperation nsdop)
 {
   int op = 0;
   if (nsdop & NSDragOperationCopy)
-    op |= os::DropOperation::Copy;
+    op |= static_cast<int>(os::DropOperation::Copy);
 
   if (nsdop & NSDragOperationMove)
-    op |= os::DropOperation::Move;
+    op |= static_cast<int>(os::DropOperation::Move);
 
   if (nsdop & NSDragOperationLink)
-    op |= os::DropOperation::Link;
+    op |= static_cast<int>(os::DropOperation::Link);
 
   return static_cast<os::DropOperation>(op);
 }
