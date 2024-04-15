@@ -169,11 +169,9 @@ void SystemWin::setAppMode(AppMode appMode)
 {
   m_appMode = appMode;
   if (m_appMode == AppMode::GUI) {
-    auto result = OleInitialize(nullptr);
-    if (result != S_OK && result != S_FALSE) {
+    HRESULT result = OleInitialize(nullptr);
+    if (result != S_OK && result != S_FALSE)
       LOG(LogLevel::ERROR, "WIN: Could not initialize OLE (%d)", result);
-      return;
-    }
   }
 }
 

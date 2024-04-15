@@ -277,7 +277,7 @@ WindowWin::WindowWin(const WindowSpec& spec)
   // WindowSpec::activate() flag for this)
   m_activate = (spec.parent() == nullptr);
 
-  auto result = RegisterDragDrop(m_hwnd, reinterpret_cast<LPDROPTARGET>(&m_dragTargetAdapter));
+  HRESULT result = RegisterDragDrop(m_hwnd, reinterpret_cast<LPDROPTARGET>(&m_dragTargetAdapter));
   if (result != S_OK) {
     LOG(LogLevel::ERROR, "Could not register window for Drag & Drop: %d\n", result);
   }

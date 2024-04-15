@@ -209,11 +209,13 @@ bool DragDataProviderWin::contains(DragDataItemType type)
         if (type == DragDataItemType::Image)
           return true;
         break;
-      default:
+      default: {
         int namelen = GetClipboardFormatNameA(fmt.cfFormat, name, 100);
         name[namelen] = '\0';
         if (std::strcmp(name, "PNG") == 0 && type == DragDataItemType::Image)
           return true;
+        break;
+      }
     }
   }
   return false;
@@ -260,7 +262,7 @@ STDMETHODIMP DragTargetAdapter::DragEnter(IDataObject* pDataObj,
   if (!m_data)
     return E_UNEXPECTED;
 
-  m_position = drag_position((HWND) m_window->nativeHandle(), pt);
+  m_position = drag_position((HWND)m_window->nativeHandle(), pt);
   auto ddProvider = std::make_unique<DragDataProviderWin>(m_data.get());
   DragEvent ev(m_window,
                as_dropoperation(*pdwEffect),
