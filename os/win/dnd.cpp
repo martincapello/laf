@@ -105,6 +105,8 @@ base::paths DragDataProviderWin::getPaths()
         for (int index = 0; index < count; ++index) {
           int length = DragQueryFile(hdrop, index, nullptr, 0);
           if (length > 0) {
+            // From Win32 docs: https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-dragqueryfilew
+            // the DragQueryFile() does't include the null character in its return value.
             std::vector<TCHAR> str(length + 1);
             DragQueryFile(hdrop, index, &str[0], str.size());
             files.push_back(base::to_utf8(&str[0]));
