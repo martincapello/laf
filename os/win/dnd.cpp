@@ -13,6 +13,8 @@
 
 #include <shlobj.h>
 
+namespace {
+
 DWORD as_dropeffect(const os::DropOperation op)
 {
   DWORD effect = DROPEFFECT_NONE;
@@ -49,6 +51,8 @@ gfx::Point drag_position(HWND hwnd, POINTL& pt)
   ScreenToClient(hwnd, (LPPOINT) &pt);
   return gfx::Point(pt.x, pt.y);
 }
+
+} // anonymous namespace
 
 namespace os {
 
