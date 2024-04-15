@@ -29,6 +29,7 @@ elseif(APPLE)
     list(APPEND LAF_OS_SOURCES
       osx/app.mm
       osx/app_delegate.mm
+      osx/dnd.mm
       osx/color_space.mm
       osx/event_queue.mm
       osx/keys.mm
