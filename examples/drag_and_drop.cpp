@@ -130,6 +130,7 @@ static void redraw_window(os::Window* window)
 
   auto zoneColor = gfx::rgba(100, 255, 100);
   auto textColor = zoneColor;
+  windowData.dropZone.x = window->width() - windowData.dropZone.w - 12;
   if (windowData.dropZone.contains(windowData.dragPosition)){
     paint.style(os::Paint::Style::Fill);
     paint.color(zoneColor);
@@ -155,7 +156,7 @@ static os::WindowRef create_window(const std::string& title,
   newWindow->setTitle(title);
   newWindow->setVisible(true);
   newWindow->setDragTarget(&dragTarget);
-  windowData.dropZone = {32, spec.frame().h - 64 - 40, 64, 64};
+  windowData.dropZone = {spec.frame().w - 64 - 12, 12, 64, 64};
   redraw_window(newWindow.get());
   return newWindow;
 }
