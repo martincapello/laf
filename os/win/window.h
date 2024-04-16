@@ -73,6 +73,9 @@ namespace os {
 
     NativeHandle nativeHandle() const override { return m_hwnd; }
 
+  protected:
+    void onSetDragTarget() override;
+
   private:
     bool setCursor(HCURSOR hcursor,
                    const CursorRef& cursor);
@@ -139,7 +142,7 @@ namespace os {
     gfx::Rect m_restoredFrame;
 #endif
 
-    DragTargetAdapter m_dragTargetAdapter = DragTargetAdapter(this);
+    std::unique_ptr<DragTargetAdapter> m_dragTargetAdapter = nullptr;
 
     int m_scale;
     bool m_isCreated;

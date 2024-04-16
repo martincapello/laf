@@ -195,7 +195,7 @@ namespace os {
     // devices like stylus can be used to move and resize the window.
     std::function<Hit(os::Window*, const gfx::Point& pos)> handleHitTest = nullptr;
 
-    void setDragTarget(DragTarget* delegate) { m_dragTarget = delegate; }
+    void setDragTarget(DragTarget* delegate);
     bool hasDragTarget() { return m_dragTarget != nullptr; }
 
     template<typename T>
@@ -219,6 +219,8 @@ namespace os {
     virtual void onDrag(os::DragEvent& ev);
     virtual void onDragLeave(os::DragEvent& ev);
     virtual void onDrop(os::DragEvent& ev);
+
+    virtual void onSetDragTarget() {}
 
   private:
     void* m_userData;

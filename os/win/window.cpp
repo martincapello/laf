@@ -277,11 +277,6 @@ WindowWin::WindowWin(const WindowSpec& spec)
   // WindowSpec::activate() flag for this)
   m_activate = (spec.parent() == nullptr);
 
-  HRESULT result = RegisterDragDrop(m_hwnd, reinterpret_cast<LPDROPTARGET>(&m_dragTargetAdapter));
-  if (result != S_OK) {
-    LOG(LogLevel::ERROR, "Could not register window for Drag & Drop: %d\n", result);
-  }
-
   // Log information about the system (for debugging/user support
   // purposes in case the window doesn't display anything)
   if (base::get_log_level() >= INFO) {
@@ -614,6 +609,26 @@ void WindowWin::setMousePosition(const gfx::Point& position)
   SetCursorPos(pos.x, pos.y);
 
   system()->_setInternalMousePosition(gfx::Point(pos.x, pos.y));
+}
+
+void WindowWin::onSetDragTarget()
+{
+  HRESULT result;
+  // Drag target was set, then register for drag and drop.
+  if (hasDragTarget()) {
+    m_dragTargetAdapter = std::make_unique<DragTargetAdapter>(this);
+    result = RegisterDragDrop(m_hwnd, reinterpret_cast<LPDROPTARGET>(m_dragTargetAdapter.get()));
+    if (result != S_OK) {
+      LOG(LogLevel::ERROR, "Could not register window for Drag & Drop: %d\n", result);
+    }
+  }
+  else { // Drag target was unset (set to nullptr), then revoke DnD registration.
+    m_dragTargetAdapter = nullptr;
+    result = RevokeDragDrop(m_hwnd);
+    if (result != S_OK) {
+      LOG(LogLevel::ERROR, "Could not revoke Drag & Drop: %d\n", result);
+    }
+  }
 }
 
 bool WindowWin::setCursor(NativeCursor cursor)

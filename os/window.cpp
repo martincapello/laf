@@ -48,6 +48,12 @@ void Window::queueEvent(os::Event& ev)
   onQueueEvent(ev);
 }
 
+void Window::setDragTarget(DragTarget* delegate)
+{
+  m_dragTarget = delegate;
+  onSetDragTarget();
+}
+
 void Window::notifyDragEnter(os::DragEvent& ev)
 {
   onDragEnter(ev);
