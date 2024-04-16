@@ -52,12 +52,8 @@ gfx::Point drag_position(HWND hwnd, POINTL& pt)
   return gfx::Point(pt.x, pt.y);
 }
 
-} // anonymous namespace
-
-namespace os {
-
 // HGLOBAL Locking/Unlocking wrapper
-template <typename T>
+template<typename T>
 class GLock {
 public:
   GLock() = delete;
@@ -66,26 +62,22 @@ public:
     m_data = static_cast<T>(GlobalLock(m_hmem));
   }
 
-  ~GLock() {
-    GlobalUnlock(m_hmem);
-  }
+  ~GLock() { GlobalUnlock(m_hmem); }
 
-  operator HGLOBAL() {
-    return m_hmem;
-  }
+  operator HGLOBAL() { return m_hmem; }
 
-  operator T () {
-    return m_data;
-  }
+  operator T() { return m_data; }
 
-  SIZE_T size() {
-    return GlobalSize(m_hmem);
-  }
+  SIZE_T size() { return GlobalSize(m_hmem); }
 
 private:
   HGLOBAL m_hmem;
   T m_data;
 };
+
+} // anonymous namespace
+
+namespace os {
 
 base::paths DragDataProviderWin::getPaths()
 {
